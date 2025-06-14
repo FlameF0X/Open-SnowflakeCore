@@ -5,7 +5,7 @@ Open-SnowflakeCore-G0 is a open-sourse pre-train version of SnowflakeCore-G0-Rel
 This is the initial release of the SnowflakeCore (SnowflakeCore-G0-Release) series language models, trained on the DialogMLM-50K dataset with optimized memory usage.
 
 ## Model details
-- Architecture: SnowflakeCoreCore
+- Architecture: SnowflakeCore
 - Hidden size: {dm}
 - Number of attention heads: {nh}
 - Number of layers: {nl}
