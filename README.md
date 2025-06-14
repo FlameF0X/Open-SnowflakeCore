@@ -1,11 +1,11 @@
-# Open-Snowflake-G0
+# Open-SnowflakeCore-G0
 
-Open-Snowflake-G0 is a open-sourse pre-train version of Snowflake-G0-Release series.
+Open-SnowflakeCore-G0 is a open-sourse pre-train version of SnowflakeCore-G0-Release series.
 
-This is the initial release of the Snowflake (Snowflake-G0-Release) series language models, trained on the DialogMLM-50K dataset with optimized memory usage.
+This is the initial release of the SnowflakeCore (SnowflakeCore-G0-Release) series language models, trained on the DialogMLM-50K dataset with optimized memory usage.
 
 ## Model details
-- Architecture: SnowflakeCore
+- Architecture: SnowflakeCoreCore
 - Hidden size: {dm}
 - Number of attention heads: {nh}
 - Number of layers: {nl}
@@ -19,9 +19,9 @@ This model is fully compatible with the HuggingFace Transformers library. You ca
 ```python
 from transformers import AutoConfig, AutoModel, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("path/to/snowflake_g0_release")
-config = AutoConfig.from_pretrained("path/to/snowflake_g0_release")
-model = AutoModel.from_pretrained("path/to/snowflake_g0_release")
+tokenizer = AutoTokenizer.from_pretrained("path/to/SnowflakeCore_g0_release")
+config = AutoConfig.from_pretrained("path/to/SnowflakeCore_g0_release")
+model = AutoModel.from_pretrained("path/to/SnowflakeCore_g0_release")
 ```
 
 ## Memory Optimization Techniques
