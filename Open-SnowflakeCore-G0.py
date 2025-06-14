@@ -9,7 +9,7 @@ import math as m, os
 import gc
 from safetensors.torch import save_model as sm
 
-msl,dm,nh,nl,fd,bs,ne,lr,sd,gas=384,384,6,4,768,4,20,3e-5,"Open-Snowflake-G0",4
+msl,dm,nh,nl,fd,bs,ne,lr,sd,gas=384,384,6,4,768,4,20,3e-5,"Open-SnowflakeCore",4
 ds=ld("FlameF0X/DialogMLM-50K")
 tk=bt.from_pretrained("bert-base-uncased")
 vs=tk.vocab_size
@@ -97,7 +97,7 @@ class sc(n.Module):
   s.fn,s.dr,s.fc=n.LayerNorm(dm,eps=1e-6),n.Dropout(dr),n.Linear(dm,vs)
   s.fc.weight=s.emb.weight
   n.init.normal_(s.emb.weight,mean=0,std=0.02)
-  s.config=pc(vocab_size=vs,hidden_size=dm,num_attention_heads=nh,num_hidden_layers=nl,max_position_embeddings=msl,intermediate_size=fd,model_type="snowflake",architectures=["SnowflakeCore"])
+  s.config=pc(vocab_size=vs,hidden_size=dm,num_attention_heads=nh,num_hidden_layers=nl,max_position_embeddings=msl,intermediate_size=fd,model_type="snowflakecore",architectures=["SnowflakeCoreCore"])
  def forward(s,ii,am=None):
   sl=ii.size(1)
   x=s.emb(ii)+s.pe[:,:sl,:]
@@ -132,7 +132,7 @@ ts=len(trl)*ne
 sch=o.lr_scheduler.CosineAnnealingLR(opt,T_max=ts)
 st,al=0,0
 
-print(f"Starting training Snowflake-G0-Release model with config: D_MODEL={dm}, HEADS={nh}, LAYERS={nl}, FF_DIM={fd}")
+print(f"Starting training Open-SnowflakeCore model with config: D_MODEL={dm}, HEADS={nh}, LAYERS={nl}, FF_DIM={fd}")
 
 for ep in range(ne):
  mdl.train()
@@ -182,18 +182,18 @@ for ep in range(ne):
  print(f"Epoch {ep+1}/{ne}, Val Loss: {avv:.4f}")
 
 os.makedirs(sd,exist_ok=True)
-hfc=pc(vocab_size=vs,hidden_size=dm,num_attention_heads=nh,num_hidden_layers=nl,max_position_embeddings=msl,intermediate_size=fd,model_type="gpt2",architectures=["SnowflakeCore"])
+hfc=pc(vocab_size=vs,hidden_size=dm,num_attention_heads=nh,num_hidden_layers=nl,max_position_embeddings=msl,intermediate_size=fd,model_type="gpt2",architectures=["SnowflakeCoreCore"])
 hfc.save_pretrained(sd)
 t.save(mdl.state_dict(),os.path.join(sd,"pytorch_model.bin"))
 sm(mdl.half(),os.path.join(sd,"model.safetensors"),metadata={"format":"pt"})
 tk.save_pretrained(sd)
 
 with open(os.path.join(sd,"README.md"),"w") as f:
- f.write(f"""# Open-Snowflake-G0
+ f.write(f"""# Open-SnowflakeCore-G0
 
-[Open-Snowflake-G0](https://github.com/FlameF0X/Open-Snowflake-G0) is a open-sourse pre-train version of Snowflake-G0-Release series.
+[Open-SnowflakeCore-G0](https://github.com/FlameF0X/Open-SnowflakeCore-G0) is a open-sourse pre-train version of SnowflakeCore-G0-Release series.
 
-This is the initial release of the Snowflake (Snowflake-G0-Release) series language models, trained on the DialogMLM-50K dataset with optimized memory usage.
+This is the initial release of the Open-SnowflakeCore series language models, trained on the DialogMLM-50K dataset with optimized memory usage.
 
 ## Model details
 - Architecture: SnowflakeCore
@@ -210,9 +210,9 @@ This model is fully compatible with the HuggingFace Transformers library. You ca
 ```python
 from transformers import AutoConfig, AutoModel, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("path/to/snowflake_g0_release")
-config = AutoConfig.from_pretrained("path/to/snowflake_g0_release")
-model = AutoModel.from_pretrained("path/to/snowflake_g0_release")
+tokenizer = AutoTokenizer.from_pretrained("path/to/Open-SnowflakeCore")
+config = AutoConfig.from_pretrained("path/to/Open-SnowflakeCore")
+model = AutoModel.from_pretrained("path/to/Open-SnowflakeCore")
 ```
 
 ## Memory Optimization Techniques
@@ -226,4 +226,4 @@ model = AutoModel.from_pretrained("path/to/snowflake_g0_release")
 The model weights are stored in both PyTorch (.bin) and safetensors format for improved security, loading efficiency, and compatibility.
 """)
 
-print(f"Snowflake-G0-Release model saved in {sd}")
+print(f"Open-SnowflakeCore model saved in {sd}")
