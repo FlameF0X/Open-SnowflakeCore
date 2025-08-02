@@ -207,7 +207,8 @@ This educational codebase welcomes contributions! Areas for improvement:
 - Inspired by the GPT family of models
 - Built with PyTorch and HuggingFace Transformers
 - Educational implementation for the community
-
+- If you build a model and publish it on HuggingFace please credit me, [Daniel Fox](https://huggingface.co/FlameF0X) or this repo!
+ 
 ---
 
 **Note**: This is an educational implementation. For production use cases, consider using established libraries like HuggingFace Transformers or other optimized frameworks.
