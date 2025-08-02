@@ -19,7 +19,7 @@ class Config:
     This configuration targets a model with approximately 10 million parameters.
     """
     MODEL_NAME = "gpt2"
-    DATASET_NAME = "common-pile/wikimedia_filtered"
+    DATASET_NAME = "common-pile/wikimedia_filtered" # DO NOT USE THIS DATASET IF YOU DONT HAVE A LOT OF RAM AND STORAGE!
     BATCH_SIZE = 1
     EPOCHS = 5
     # Adjusted hyperparameters for a smaller, ~10M parameter model
