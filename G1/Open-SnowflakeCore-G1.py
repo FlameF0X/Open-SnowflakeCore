@@ -84,7 +84,7 @@ class TextDataset(Dataset):
 
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: A tuple containing the tokenized
-                                               input IDs and the attention mask.
+                                                input IDs and the attention mask.
         """
         item = self.dataset[idx]
         if "text" not in item or not isinstance(item["text"], str):
@@ -430,7 +430,7 @@ class SnowflakeCoreTrainer:
 
             print(f"\n--- Epoch {epoch+1}/{self.config.EPOCHS} Summary ---")
             print(f"  Train Loss: {avg_train_loss:.4f} | Train PPL: {math.exp(avg_train_loss):.2f}")
-            print(f"  Val Loss:   {val_loss:.4f} | Val PPL:   {val_perplexity:.2f}")
+            print(f"  Val Loss:    {val_loss:.4f} | Val PPL:    {val_perplexity:.2f}")
 
             # Epoch-level early stopping
             if val_loss < self.best_val_loss - self.config.EARLY_STOPPING_MIN_DELTA:
@@ -452,7 +452,7 @@ class SnowflakeCoreTrainer:
             print("Restored best model state based on validation loss.")
 
     def save_model(self):
-        """Saves the model in the Hugging Face format."""
+        """Saves the model in the Hugging Face format, including a fingerprint in safetensors metadata."""
         print(f"Saving model to {self.config.SAVE_PATH}")
         os.makedirs(self.config.SAVE_PATH, exist_ok=True)
         
@@ -460,12 +460,20 @@ class SnowflakeCoreTrainer:
         model_path = os.path.join(self.config.SAVE_PATH, "pytorch_model.bin")
         torch.save(self.model.to(torch.float32).state_dict(), model_path)
         
-        # Save as safetensors if available
+        # Save as safetensors with metadata
         try:
             from safetensors.torch import save_file as save_safetensors
             safetensors_path = os.path.join(self.config.SAVE_PATH, "model.safetensors")
-            save_safetensors(self.model.to(torch.float32).state_dict(), safetensors_path)
-            print(f"Model also saved as {safetensors_path}")
+            
+            # --- START OF MODIFICATION ---
+            # Define the metadata dictionary with the "fingerprint"
+            metadata = {
+                "snowflake_core_architecture": "trained_on_OpenSnowflakeCore-G1-Small"
+            }
+            # Save the model state dict and the metadata
+            save_safetensors(self.model.to(torch.float32).state_dict(), safetensors_path, metadata=metadata)
+            print(f"Model also saved as {safetensors_path} with architecture metadata.")
+            # --- END OF MODIFICATION ---
         except ImportError:
             print("safetensors not installed. To save as .safetensors, run: pip install safetensors")
             
