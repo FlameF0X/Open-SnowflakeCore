@@ -182,9 +182,9 @@ class GPTBlock(nn.Module):
         x = x + self.dropout2(self.mlp(self.ln2(x)))
         return x
 
-class SnowflakeCoreG1(nn.Module):
+class OpenSnowflakeCore(nn.Module):
     """
-    The main SnowflakeCoreG1 model architecture, a Transformer-based decoder-only model.
+    The main OpenSnowflakeCore model architecture, a Transformer-based decoder-only model.
     """
     def __init__(self, vocab_size: int, embed_dim: int, num_heads: int, num_layers: int, max_length: int, ffn_dim: int, dropout: float = 0.1):
         super().__init__()
@@ -201,7 +201,7 @@ class SnowflakeCoreG1(nn.Module):
 
     def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor = None) -> torch.Tensor:
         """
-        Forward pass for the SnowflakeCoreG1 model.
+        Forward pass for the OpenSnowflakeCore model.
         
         Args:
             input_ids (torch.Tensor): Input token IDs of shape `[batch_size, sequence_length]`.
@@ -253,7 +253,7 @@ class SnowflakeCoreTrainer:
         
         # 3. Model, Optimizer, and Scaler
         print("Initializing model...")
-        self.model = SnowflakeCoreG1(
+        self.model = OpenSnowflakeCore(
             vocab_size=self.vocab_size,
             embed_dim=config.EMBED_DIM,
             num_heads=config.NUM_HEADS,
@@ -472,8 +472,8 @@ class SnowflakeCoreTrainer:
         # Save model config
         actual_epochs = len(self.train_losses)
         config_dict = {
-            "architectures": ["SnowflakeCoreG1"],
-            "model_type": "snowflake_core",
+            "architectures": ["OpenSnowflakeCore"],
+            "model_type": "open_snowflake_core",
             "vocab_size": self.vocab_size,
             "embed_dim": self.config.EMBED_DIM,
             "num_heads": self.config.NUM_HEADS,
