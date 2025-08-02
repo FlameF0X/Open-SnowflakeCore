@@ -18,7 +18,7 @@ class Config:
     """A class to hold all training and model configuration parameters.
     This configuration targets a model with approximately 10 million parameters.
     """
-    MODEL_NAME = "gpt2"
+    MODEL_NAME = "gpt2" # This is our tokenizer, you can use any gpt-2 version. I am lazy to train my own tokenizer.
     DATASET_NAME = "common-pile/wikimedia_filtered" # DO NOT USE THIS DATASET IF YOU DONT HAVE A LOT OF RAM AND STORAGE!
     BATCH_SIZE = 1
     EPOCHS = 5
