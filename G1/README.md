@@ -1,8 +1,8 @@
-# OpenSnowflakeCore
+# OpenSnowflakeCore-G1
 
 **An open-source, educational implementation of a GPT-style transformer language model**
 
-OpenSnowflakeCore is a clean, well-documented implementation of a decoder-only transformer architecture similar to GPT. This is an open-source version of an older iteration of the main SnowflakeCore codebase, designed for educational purposes and experimentation with transformer architectures.
+OpenSnowflakeCore-G1 is a clean, well-documented implementation of a decoder-only transformer architecture similar to GPT. This is an open-source version of an older iteration of the main SnowflakeCore codebase, designed for educational purposes and experimentation with transformer architectures.
 
 ## 🌟 Features
 
